@@ -26,15 +26,15 @@ class SwaggerConfig {
                     )
             )
 
-//            .addSecurityItem(SecurityRequirement().addList("bearerAuth"))
-//            .components(
-//                io.swagger.v3.oas.models.Components().addSecuritySchemes(
-//                    "bearerAuth",
-//                    SecurityScheme()
-//                        .type(SecurityScheme.Type.HTTP)
-//                        .scheme("bearer")
-//                        .bearerFormat("JWT")
-//                )
-//            )
+            .addSecurityItem(SecurityRequirement().addList("bearerAuth"))
+            .components(
+                io.swagger.v3.oas.models.Components().addSecuritySchemes(
+                    "bearerAuth",
+                    SecurityScheme()
+                        .type(SecurityScheme.Type.HTTP)
+                        .scheme("bearer")
+                        .bearerFormat("JWT")
+                )
+            )
     }
 }
