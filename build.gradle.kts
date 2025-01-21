@@ -27,6 +27,12 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+
+    // https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial
+    implementation("org.hibernate:hibernate-spatial:6.6.4.Final")
+
+    implementation("com.google.firebase:firebase-admin:9.4.3")
+
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
