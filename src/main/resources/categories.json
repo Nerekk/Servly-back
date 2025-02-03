@@ -4,6 +4,7 @@
       "pl": "Elektryk",
       "en": "Electrician"
     },
+    "icon": "electrician",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -60,6 +61,7 @@
       "pl": "Hydraulik",
       "en": "Plumber"
     },
+    "icon": "plumber",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -116,6 +118,7 @@
       "pl": "Malarz",
       "en": "Painter"
     },
+    "icon": "painter",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -172,6 +175,7 @@
       "pl": "Sprzątanie",
       "en": "Cleaning"
     },
+    "icon": "cleaning",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -228,6 +232,7 @@
       "pl": "Mechanik",
       "en": "Mechanic"
     },
+    "icon": "mechanic",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -284,6 +289,7 @@
       "pl": "Montaż, Instalacje",
       "en": "Installations"
     },
+    "icon": "installations",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -340,6 +346,7 @@
       "pl": "Naprawy",
       "en": "Repairs"
     },
+    "icon": "repairs",
     "questionsWithTranslations": [
       {
         "Question 1": {
@@ -396,6 +403,7 @@
       "pl": "Inne",
       "en": "Others"
     },
+    "icon": "others",
     "questionsWithTranslations": [
       {
         "Question 1": {
