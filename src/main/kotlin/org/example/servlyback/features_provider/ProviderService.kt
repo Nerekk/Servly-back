@@ -59,9 +59,9 @@ class ProviderService(
         val uid = firebaseToken.uid
 
         val provider = providerRepository.findByUserUid(uid) ?: return createProvider(providerInfo)
-
+        println(providerInfo)
         provider.name = providerInfo.name
-        provider.phoneNumber = provider.phoneNumber
+        provider.phoneNumber = providerInfo.phoneNumber
         provider.city = providerInfo.city
         provider.rangeInKm = providerInfo.rangeInKm
 
