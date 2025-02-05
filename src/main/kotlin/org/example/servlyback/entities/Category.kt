@@ -9,6 +9,9 @@ data class Category(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     val id: Long = 0,
 
+    @Column(nullable = false)
+    var icon: String,
+
     @OneToMany(mappedBy = "category", cascade = [CascadeType.ALL], orphanRemoval = true)
     val translations: MutableList<CategoryTranslation> = mutableListOf(),
 

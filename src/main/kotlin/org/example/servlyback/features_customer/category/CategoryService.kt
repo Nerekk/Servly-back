@@ -16,9 +16,20 @@ class CategoryService(
 
             CategoryInfo(
                 id = category.id,
-                name = translation.name
+                name = translation.name,
+                icon = category.icon
             )
         }
+    }
+
+    fun getCategory(categoryId: Long, languageCode: String): CategoryInfo {
+        val category = categoryRepository.findById(categoryId)
+            .orElseThrow { IllegalArgumentException("Category not found with id: $categoryId") }
+
+        val translation = category.translations.find { it.languageCode == languageCode }
+        if (translation == null) throw IllegalArgumentException("Translation not found with code: $languageCode")
+
+        return CategoryInfo(category.id, translation.name, category.icon)
     }
 
     fun getQuestionsForCategory(categoryId: Long, languageCode: String): List<QuestionInfo> {

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 data class CategoryJson(
+    val icon: String,
     val nameTranslations: Map<String, String>,
     val questionsWithTranslations: List<Map<String, Map<String, String>>>
 )
@@ -39,6 +40,7 @@ class DataInitializer(
     private fun generateCategories(): List<Category> {
         val categories = listOf(
             createCategory(
+                icon = "electrician",
                 nameTranslations = mapOf("pl" to "Elektryk", "en" to "Electrician"),
                 questionsWithTranslations = listOf(
                     "Question 1" to mapOf(
@@ -56,10 +58,11 @@ class DataInitializer(
     }
 
     private fun createCategory(
+        icon: String,
         nameTranslations: Map<String, String>,
         questionsWithTranslations: List<Pair<String, Map<String, String>>>
     ): Category {
-        val category = Category()
+        val category = Category(icon = icon)
 
         category.translations.addAll(
             nameTranslations.map { (languageCode, name) ->
@@ -98,6 +101,7 @@ class DataInitializer(
     private fun mapCategoriesToCreateCategoryFormat(categoryJsonList: List<CategoryJson>): List<Category> {
         return categoryJsonList.map { categoryJson ->
             createCategory(
+                icon = categoryJson.icon,
                 nameTranslations = categoryJson.nameTranslations,
                 questionsWithTranslations = categoryJson.questionsWithTranslations.map { questionMap ->
                     val (questionKey, translations) = questionMap.entries.first()

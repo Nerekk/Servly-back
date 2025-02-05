@@ -2,10 +2,11 @@ package org.example.servlyback.features_customer.category
 
 import org.example.servlyback.dto.CategoryInfo
 import org.example.servlyback.dto.QuestionInfo
+import org.example.servlyback.util.ControllerMappings
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/api/" + ControllerMappings.CATEGORY)
 class CategoryController(private val categoryService: CategoryService) {
 
     @GetMapping
@@ -13,7 +14,15 @@ class CategoryController(private val categoryService: CategoryService) {
         return categoryService.getCategories(languageCode)
     }
 
-    @GetMapping("/api/{categoryId}/questions")
+    @GetMapping("/{categoryId}")
+    fun getCategory(
+        @PathVariable categoryId: Long,
+        @RequestParam languageCode: String
+    ): CategoryInfo {
+        return categoryService.getCategory(categoryId, languageCode)
+    }
+
+    @GetMapping("/questions/{categoryId}")
     fun getQuestionsForCategory(
         @PathVariable categoryId: Long,
         @RequestParam languageCode: String
