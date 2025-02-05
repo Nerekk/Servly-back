@@ -28,7 +28,7 @@ class FirebaseAuthenticationFilter : Filter {
             val token = authHeader.substring(7)
             try {
                 val decodedToken: FirebaseToken = FirebaseAuth.getInstance().verifyIdToken(token)
-                println("Token valid, UID: ${decodedToken.uid}")
+                println("Token valid: $token, UID: ${decodedToken.uid}")
                 val authentication = PreAuthenticatedAuthenticationToken(decodedToken, null)
                 authentication.isAuthenticated = true
                 SecurityContextHolder.getContext().authentication = authentication

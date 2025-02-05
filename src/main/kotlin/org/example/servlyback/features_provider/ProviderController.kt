@@ -1,11 +1,12 @@
 package org.example.servlyback.features_provider
 
 import org.example.servlyback.dto.ProviderInfo
+import org.example.servlyback.util.ControllerMappings
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/api/providers")
+@RequestMapping("/api/" + ControllerMappings.PROVIDER)
 class ProviderController(private val providerService: ProviderService) {
 
     @GetMapping

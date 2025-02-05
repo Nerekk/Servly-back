@@ -1,0 +1,458 @@
+[
+  {
+    "nameTranslations": {
+      "pl": "Elektryk",
+      "en": "Electrician"
+    },
+    "icon": "electrician",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Jaki rodzaj pracy elektrycznej jest potrzebny? (np. montaż, naprawa, diagnoza usterki)",
+          "en": "What type of electrical work is needed? (e.g., installation, repair, fault diagnosis)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Czy jest to nowa instalacja czy naprawa istniejącej?",
+          "en": "Is it a new installation or repair of an existing one?"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Jakie urządzenia lub instalacje wymagają pracy? (np. gniazdka, oświetlenie, skrzynka rozdzielcza)",
+          "en": "Which devices or installations require work? (e.g., sockets, lighting, distribution board)"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy masz dostęp do dokumentacji elektrycznej budynku?",
+          "en": "Do you have access to the building's electrical documentation?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy praca wymaga pilnej interwencji? (tak/nie)",
+          "en": "Does the work require urgent intervention? (yes/no)"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy dostęp do miejsca pracy jest łatwy? (np. wysokość, zabudowane elementy)",
+          "en": "Is access to the work area easy? (e.g., height, built-in elements)"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Czy masz własne materiały, czy usługodawca ma je dostarczyć?",
+          "en": "Do you have your own materials, or should the service provider supply them?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje lub szczegóły dotyczące zlecenia?",
+          "en": "Additional information or details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Hydraulik",
+      "en": "Plumber"
+    },
+    "icon": "plumber",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Jaki problem wymaga naprawy? (np. przeciek, zatkanie, montaż nowej instalacji)",
+          "en": "What problem needs repair? (e.g., leak, clog, new installation)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Czy problem dotyczy zimnej, ciepłej wody czy kanalizacji?",
+          "en": "Does the problem concern cold water, hot water, or sewage?"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Jakiego rodzaju urządzenie wymaga pracy? (np. zlew, wanna, toaleta, bojler)",
+          "en": "What type of device requires work? (e.g., sink, bathtub, toilet, boiler)"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy dostęp do instalacji jest łatwy?",
+          "en": "Is access to the installation easy?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy problem jest nagły i wymaga pilnej interwencji? (tak/nie)",
+          "en": "Is the problem urgent and requires immediate intervention? (yes/no)"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy posiadasz części zamienne, czy usługodawca ma je dostarczyć?",
+          "en": "Do you have spare parts, or should the service provider supply them?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Czy w budynku występują inne problemy hydrauliczne?",
+          "en": "Are there other plumbing issues in the building?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Malarz",
+      "en": "Painter"
+    },
+    "icon": "painter",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Jakie powierzchnie mają być malowane? (np. ściany, sufit, drzwi, elewacja)",
+          "en": "Which surfaces need painting? (e.g., walls, ceiling, doors, facade)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Czy obecnie na powierzchni są stare powłoki wymagające usunięcia?",
+          "en": "Are there old coatings on the surface that need removal?"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy masz już wybrane farby, czy oczekujesz pomocy w ich doborze?",
+          "en": "Do you already have selected paints, or do you need help choosing them?"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Jaka jest orientacyjna powierzchnia do pomalowania? (m²)",
+          "en": "What is the approximate area to be painted? (m²)"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy wymagana jest dodatkowa obróbka ścian? (np. gładzenie, szpachlowanie)",
+          "en": "Is additional wall preparation needed? (e.g., smoothing, patching)"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy pomieszczenie jest umeblowane? (czy konieczne jest zabezpieczenie mebli)",
+          "en": "Is the room furnished? (is furniture protection needed)"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Czy usługa wymaga prac na wysokości? (np. klatka schodowa, elewacja)",
+          "en": "Does the service require working at heights? (e.g., staircase, facade)"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Sprzątanie",
+      "en": "Cleaning"
+    },
+    "icon": "cleaning",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Jakie pomieszczenia mają zostać posprzątane? (np. mieszkanie, dom, biuro)",
+          "en": "Which areas need cleaning? (e.g., apartment, house, office)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Jaka jest orientacyjna powierzchnia do posprzątania? (m²)",
+          "en": "What is the approximate area to be cleaned? (m²)"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy są jakieś szczególne wymagania dotyczące czyszczenia? (np. czyszczenie po remoncie, mycie okien)",
+          "en": "Are there any special cleaning requirements? (e.g., post-renovation cleaning, window washing)"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy masz własne środki czystości, czy usługodawca ma je zapewnić?",
+          "en": "Do you have your own cleaning supplies, or should the service provider supply them?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy sprzątanie ma być jednorazowe czy cykliczne?",
+          "en": "Is the cleaning one-time or recurring?"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy w domu znajdują się zwierzęta domowe?",
+          "en": "Are there pets in the house?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Czy wymagana jest dezynfekcja lub specjalistyczne czyszczenie? (np. dywanów, tapicerki)",
+          "en": "Is disinfection or specialized cleaning required? (e.g., carpets, upholstery)"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Mechanik",
+      "en": "Mechanic"
+    },
+    "icon": "mechanic",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Jaki rodzaj pojazdu wymaga naprawy? (np. samochód osobowy, motocykl, ciężarówka)",
+          "en": "What type of vehicle needs repair? (e.g., car, motorcycle, truck)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Jaki problem wymaga naprawy? (np. silnik, hamulce, elektryka, zawieszenie)",
+          "en": "What is the problem that needs repair? (e.g., engine, brakes, electrical, suspension)"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy masz już diagnozę problemu?",
+          "en": "Do you already have a diagnosis of the problem?"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy pojazd jest mobilny, czy wymaga transportu do warsztatu?",
+          "en": "Is the vehicle mobile, or does it require towing to the workshop?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy masz własne części zamienne, czy usługodawca ma je zapewnić?",
+          "en": "Do you have your own spare parts, or should the service provider supply them?"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy pojazd był wcześniej serwisowany w związku z tym problemem?",
+          "en": "Has the vehicle been previously serviced for this issue?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Jaki jest preferowany termin wykonania usługi?",
+          "en": "What is the preferred service deadline?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Montaż, Instalacje",
+      "en": "Installations"
+    },
+    "icon": "installations",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Co wymaga instalacji? (np. klimatyzacja, panele fotowoltaiczne, system alarmowy)",
+          "en": "What needs to be installed? (e.g., air conditioning, solar panels, alarm system)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Czy masz już zakupione urządzenie czy oczekujesz pomocy w jego doborze?",
+          "en": "Do you already have the device, or do you need help selecting it?"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy wymagana jest modyfikacja istniejącej instalacji?",
+          "en": "Is modification of an existing installation required?"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy miejsce montażu jest łatwo dostępne? (np. wysokość, brak przeszkód)",
+          "en": "Is the installation site easily accessible? (e.g., height, no obstacles)"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy posiadasz dokumentację techniczną urządzenia?",
+          "en": "Do you have the technical documentation of the device?"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy instalacja wymaga dodatkowych prac budowlanych lub elektrycznych?",
+          "en": "Does the installation require additional construction or electrical work?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Jaki jest preferowany termin wykonania usługi?",
+          "en": "What is the preferred service deadline?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Naprawy",
+      "en": "Repairs"
+    },
+    "icon": "repairs",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Co wymaga naprawy? (np. meble, urządzenia AGD, instalacja elektryczna)",
+          "en": "What needs repair? (e.g., furniture, appliances, electrical installation)"
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Jaki jest problem? (np. nie działa, uszkodzenie mechaniczne, wyciek)",
+          "en": "What is the issue? (e.g., not working, mechanical damage, leakage)"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy masz dostęp do części zamiennych?",
+          "en": "Do you have access to spare parts?"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy naprawa może być wykonana na miejscu, czy wymaga transportu do warsztatu?",
+          "en": "Can the repair be done on-site, or does it require transport to a workshop?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy urządzenie/mebel jest jeszcze na gwarancji?",
+          "en": "Is the device/furniture still under warranty?"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy masz instrukcję lub schemat urządzenia?",
+          "en": "Do you have the device's manual or diagram?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Jaki jest preferowany termin wykonania usługi?",
+          "en": "What is the preferred service deadline?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  },
+  {
+    "nameTranslations": {
+      "pl": "Inne",
+      "en": "Others"
+    },
+    "icon": "others",
+    "questionsWithTranslations": [
+      {
+        "Question 1": {
+          "pl": "Opisz krótko, jakiej usługi potrzebujesz.",
+          "en": "Briefly describe the service you need."
+        }
+      },
+      {
+        "Question 2": {
+          "pl": "Czy praca wymaga specjalistycznych umiejętności?",
+          "en": "Does the work require specialized skills?"
+        }
+      },
+      {
+        "Question 3": {
+          "pl": "Czy posiadasz niezbędne materiały lub sprzęt?",
+          "en": "Do you have the necessary materials or equipment?"
+        }
+      },
+      {
+        "Question 4": {
+          "pl": "Czy usługa wymaga pracy w określonych godzinach?",
+          "en": "Does the service need to be performed during specific hours?"
+        }
+      },
+      {
+        "Question 5": {
+          "pl": "Czy dostęp do miejsca pracy jest łatwy?",
+          "en": "Is access to the work area easy?"
+        }
+      },
+      {
+        "Question 6": {
+          "pl": "Czy masz określony budżet na wykonanie usługi?",
+          "en": "Do you have a specific budget for the service?"
+        }
+      },
+      {
+        "Question 7": {
+          "pl": "Jaki jest preferowany termin realizacji?",
+          "en": "What is the preferred completion date?"
+        }
+      },
+      {
+        "Question 8": {
+          "pl": "Dodatkowe informacje dotyczące zlecenia?",
+          "en": "Additional details about the order?"
+        }
+      }
+    ]
+  }
+]
