@@ -2,6 +2,7 @@ package org.example.servlyback.entities
 
 import org.locationtech.jts.geom.Point
 import jakarta.persistence.*
+import org.example.servlyback.dto.CustomerInfo
 
 @Entity
 @Table(name = "customers")
@@ -31,5 +32,22 @@ data class Customer(
     var houseNumber: String? = null,
 
     @Column(nullable = true)
-    var location: Point? = null
-)
+    var location: Point? = null,
+
+    @Column(nullable = true)
+    var rating: Double? = null
+) {
+    fun toDto(): CustomerInfo {
+        return CustomerInfo(
+            customerId,
+            name,
+            phoneNumber,
+            city,
+            street,
+            houseNumber,
+            longitude = location?.x,
+            latitude = location?.y,
+            rating = rating
+        )
+    }
+}

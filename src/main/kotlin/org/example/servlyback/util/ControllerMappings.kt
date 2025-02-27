@@ -7,5 +7,6 @@ class ControllerMappings {
         const val PROVIDER = "provider"
         const val CATEGORY = "categories"
         const val JOB_POSTING = "job-postings"
+        const val JOB_REQUEST = "job-requests"
     }
 }

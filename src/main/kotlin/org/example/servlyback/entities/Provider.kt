@@ -2,6 +2,7 @@ package org.example.servlyback.entities
 
 import org.locationtech.jts.geom.Point
 import jakarta.persistence.*
+import org.example.servlyback.dto.ProviderInfo
 
 @Entity
 @Table(name = "providers")
@@ -28,5 +29,26 @@ data class Provider(
     var rangeInKm: Double,
 
     @Column(nullable = true)
-    var location: Point? = null
-)
+    var location: Point? = null,
+
+    @Column(nullable = true)
+    var rating: Double? = null,
+
+    @Column(name = "about_me", nullable = false, columnDefinition = "TEXT")
+    var aboutMe: String = ""
+
+) {
+    fun toDto(): ProviderInfo {
+        return ProviderInfo(
+            providerId,
+            name,
+            phoneNumber,
+            city,
+            rangeInKm,
+            longitude = location?.x,
+            latitude = location?.y,
+            rating = rating,
+            aboutMe = aboutMe
+        )
+    }
+}

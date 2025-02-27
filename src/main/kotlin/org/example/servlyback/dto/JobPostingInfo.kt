@@ -5,6 +5,7 @@ import org.example.servlyback.entities.custom_fields.JobStatus
 data class JobPostingInfo(
     val id: Long? = null,
     val customerId: Long? = null,
+    val customerName: String? = null,
     val title: String,
     val categoryId: Long,
     val city: String,

@@ -1,4 +1,4 @@
-package org.example.servlyback.features_provider
+package org.example.servlyback.features._provider
 
 import org.example.servlyback.entities.Provider
 import org.springframework.data.jpa.repository.JpaRepository

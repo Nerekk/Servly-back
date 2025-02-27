@@ -1,4 +1,4 @@
-package org.example.servlyback.features_provider
+package org.example.servlyback.features._provider
 
 import org.example.servlyback.dto.ProviderInfo
 import org.example.servlyback.util.ControllerMappings
@@ -12,6 +12,13 @@ class ProviderController(private val providerService: ProviderService) {
     @GetMapping
     fun getProvider(): ResponseEntity<ProviderInfo> {
         return providerService.getProviderInfo()
+    }
+
+    @GetMapping("/{id}")
+    fun getProviderById(
+        @PathVariable("id") id: Long
+    ): ResponseEntity<ProviderInfo> {
+        return providerService.getProviderInfoById(id)
     }
 
     @PostMapping

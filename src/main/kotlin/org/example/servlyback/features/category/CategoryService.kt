@@ -1,4 +1,4 @@
-package org.example.servlyback.features_customer.category
+package org.example.servlyback.features.category
 
 import org.example.servlyback.dto.CategoryInfo
 import org.example.servlyback.dto.QuestionInfo
