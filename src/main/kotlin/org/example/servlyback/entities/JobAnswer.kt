@@ -1,6 +1,7 @@
 package org.example.servlyback.entities
 
 import jakarta.persistence.*
+import org.example.servlyback.dto.JobAnswerInfo
 
 @Entity
 @Table(name = "job_answers")
@@ -19,4 +20,9 @@ data class JobAnswer(
 
     @Column(nullable = false, columnDefinition = "TEXT")
     val answerText: String
-)
+) {
+    fun toJobAnswerInfo() = JobAnswerInfo(
+        id = this.question.id,
+        answer = this.answerText
+    )
+}

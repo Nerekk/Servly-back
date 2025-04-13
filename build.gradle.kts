@@ -28,6 +28,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
 
+    implementation("org.springframework.boot:spring-boot-starter-websocket")
+
     // https://mvnrepository.com/artifact/org.hibernate/hibernate-spatial
     implementation("org.hibernate:hibernate-spatial:6.6.4.Final")
 

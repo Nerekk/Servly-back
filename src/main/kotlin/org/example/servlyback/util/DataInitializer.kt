@@ -7,7 +7,7 @@ import org.example.servlyback.entities.Category
 import org.example.servlyback.entities.CategoryTranslation
 import org.example.servlyback.entities.Question
 import org.example.servlyback.entities.QuestionTranslation
-import org.example.servlyback.features_customer.category.CategoryRepository
+import org.example.servlyback.features.category.CategoryRepository
 import org.springframework.boot.CommandLineRunner
 import org.springframework.core.io.ClassPathResource
 import org.springframework.stereotype.Component

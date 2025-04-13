@@ -2,6 +2,7 @@ package org.example.servlyback.entities.custom_fields
 
 enum class JobStatus {
     ACTIVE,
-    DONE,
+    IN_PROGRESS,
+    COMPLETED,
     CANCELED
 }
