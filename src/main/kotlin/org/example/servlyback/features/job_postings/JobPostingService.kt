@@ -13,7 +13,7 @@ import org.example.servlyback.features.geocoding.GeocodingService
 import org.example.servlyback.features.geocoding.GeocodingUtils
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.util.SortType
-import org.locationtech.jts.geom.Geometry
+import org.locationtech.jts.geom.Point
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
-import org.locationtech.jts.geom.Point
 
 @Service
 class JobPostingService(

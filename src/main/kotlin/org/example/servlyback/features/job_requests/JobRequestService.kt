@@ -3,7 +3,6 @@ package org.example.servlyback.features.job_requests
 import jakarta.persistence.EntityNotFoundException
 import org.example.servlyback.dto.JobRequestInfo
 import org.example.servlyback.entities.JobRequest
-import org.example.servlyback.entities.User
 import org.example.servlyback.entities.custom_fields.JobRequestStatus
 import org.example.servlyback.entities.custom_fields.JobStatus
 import org.example.servlyback.features._provider.ProviderRepository
@@ -12,7 +11,6 @@ import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.security.firebase.TokenManager.Companion.verifyCustomer
 import org.example.servlyback.security.firebase.TokenManager.Companion.verifyProvider
 import org.example.servlyback.security.firebase.handleJobRequestNotification
-import org.springframework.boot.autoconfigure.batch.BatchProperties.Job
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus

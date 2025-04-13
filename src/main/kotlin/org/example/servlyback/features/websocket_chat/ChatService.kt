@@ -2,14 +2,11 @@ package org.example.servlyback.features.websocket_chat
 
 import org.example.servlyback.dto.ChatInfo
 import org.example.servlyback.entities.ChatMessage
-import org.example.servlyback.entities.JobRequest
-import org.example.servlyback.entities.User
 import org.example.servlyback.features._customer.CustomerRepository
 import org.example.servlyback.features._provider.ProviderRepository
 import org.example.servlyback.features.job_requests.JobRequestRepository
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.security.firebase.handleChatNotification
-import org.example.servlyback.security.firebase.sendPushNotification
 import org.example.servlyback.user.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
