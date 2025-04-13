@@ -1,5 +1,6 @@
 package org.example.servlyback.dto
 
+
 data class ProviderInfo(
     val providerId: Long? = null,
 
@@ -7,7 +8,7 @@ data class ProviderInfo(
 
     val phoneNumber: String,
 
-    val city: String,
+    val address: String,
 
     val rangeInKm: Double,
 

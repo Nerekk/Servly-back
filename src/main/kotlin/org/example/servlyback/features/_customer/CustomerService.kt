@@ -3,6 +3,8 @@ package org.example.servlyback.features._customer
 import org.example.servlyback.dto.CustomerInfo
 import org.example.servlyback.entities.Customer
 import org.example.servlyback.entities.custom_fields.Role
+import org.example.servlyback.features.geocoding.GeocodingService
+import org.example.servlyback.features.geocoding.GeocodingUtils
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.user.UserRepository
 import org.example.servlyback.user.UserService
@@ -15,7 +17,8 @@ import kotlin.jvm.optionals.getOrNull
 class CustomerService(
     private val customerRepository: CustomerRepository,
     private val userRepository: UserRepository,
-    private val userService: UserService
+    private val userService: UserService,
+    private val geocodingService: GeocodingService
 ) {
 
     fun getCustomerInfo(): ResponseEntity<CustomerInfo> {
@@ -40,13 +43,16 @@ class CustomerService(
         val uid = firebaseToken.uid
 
         val user = userRepository.findByUid(uid) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+
+//        val address = geocodingService.getAddressFromCoordinates(customerInfo.latitude, customerInfo.longitude)
+//            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+
         val customer = Customer(
             user = user,
             name = customerInfo.name,
             phoneNumber = customerInfo.phoneNumber,
-            city = customerInfo.city,
-            street = customerInfo.street,
-            houseNumber = customerInfo.houseNumber
+            address = customerInfo.address,
+            location = GeocodingUtils.createPoint(customerInfo.latitude!!, customerInfo.longitude!!)
         )
 
         customerRepository.save(customer)
@@ -62,11 +68,13 @@ class CustomerService(
 
         val customer = customerRepository.findByUserUid(uid) ?: return createCustomer(customerInfo)
 
+//        val address = geocodingService.getAddressFromCoordinates(customerInfo.latitude, customerInfo.longitude)
+//            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+
         customer.name = customerInfo.name
         customer.phoneNumber = customerInfo.phoneNumber
-        customer.city = customerInfo.city
-        customer.street = customerInfo.street
-        customer.houseNumber = customerInfo.houseNumber
+        customer.address = customerInfo.address
+        customer.location = GeocodingUtils.createPoint(customerInfo.latitude!!, customerInfo.longitude!!)
 
         customerRepository.save(customer)
 

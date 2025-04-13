@@ -3,6 +3,8 @@ package org.example.servlyback.features._provider
 import org.example.servlyback.dto.ProviderInfo
 import org.example.servlyback.entities.Provider
 import org.example.servlyback.entities.custom_fields.Role
+import org.example.servlyback.features.geocoding.GeocodingService
+import org.example.servlyback.features.geocoding.GeocodingUtils
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.user.UserRepository
 import org.example.servlyback.user.UserService
@@ -15,7 +17,8 @@ import kotlin.jvm.optionals.getOrNull
 class ProviderService(
     private val providerRepository: ProviderRepository,
     private val userRepository: UserRepository,
-    private val userService: UserService
+    private val userService: UserService,
+    private val geocodingService: GeocodingService
 ) {
     fun getProviderInfo(): ResponseEntity<ProviderInfo> {
         val firebaseToken = TokenManager.getFirebaseToken()
@@ -38,11 +41,16 @@ class ProviderService(
         val uid = firebaseToken.uid
 
         val user = userRepository.findByUid(uid) ?: return ResponseEntity(HttpStatus.NOT_FOUND)
+
+//        val address = geocodingService.getAddressFromCoordinates(providerInfo.latitude, providerInfo.longitude)
+//            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+
         val provider = Provider(
             user = user,
             name = providerInfo.name,
             phoneNumber = providerInfo.phoneNumber,
-            city = providerInfo.city,
+            address = providerInfo.address,
+            location = GeocodingUtils.createPoint(providerInfo.latitude!!, providerInfo.longitude!!),
             rangeInKm = providerInfo.rangeInKm,
             aboutMe = providerInfo.aboutMe
         )
@@ -59,10 +67,15 @@ class ProviderService(
         val uid = firebaseToken.uid
 
         val provider = providerRepository.findByUserUid(uid) ?: return createProvider(providerInfo)
+
+//        val address = geocodingService.getAddressFromCoordinates(providerInfo.latitude, providerInfo.longitude)
+//            ?: return ResponseEntity(HttpStatus.BAD_REQUEST)
+
         println(providerInfo)
         provider.name = providerInfo.name
         provider.phoneNumber = providerInfo.phoneNumber
-        provider.city = providerInfo.city
+        provider.address = providerInfo.address
+        provider.location = GeocodingUtils.createPoint(providerInfo.latitude!!, providerInfo.longitude!!)
         provider.rangeInKm = providerInfo.rangeInKm
         provider.aboutMe = providerInfo.aboutMe
 

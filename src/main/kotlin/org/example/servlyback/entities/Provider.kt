@@ -23,13 +23,13 @@ data class Provider(
     var phoneNumber: String,
 
     @Column(nullable = false)
-    var city: String,
+    var address: String,
 
     @Column(name = "range_in_km", nullable = false)
     var rangeInKm: Double,
 
-    @Column(nullable = true)
-    var location: Point? = null,
+    @Column(nullable = true, columnDefinition = "geography(Point, 4326)")
+    var location: Point,
 
     @Column(nullable = true)
     var rating: Double? = null,
@@ -43,10 +43,10 @@ data class Provider(
             providerId,
             name,
             phoneNumber,
-            city,
+            address,
             rangeInKm,
-            longitude = location?.x,
-            latitude = location?.y,
+            longitude = location.x,
+            latitude = location.y,
             rating = rating,
             aboutMe = aboutMe
         )

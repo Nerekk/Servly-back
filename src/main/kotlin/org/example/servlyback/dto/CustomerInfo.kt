@@ -7,11 +7,7 @@ data class CustomerInfo(
 
     val phoneNumber: String,
 
-    val city: String,
-
-    val street: String,
-
-    val houseNumber: String? = null,
+    val address: String,
 
     val latitude: Double? = null,
 

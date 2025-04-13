@@ -2,10 +2,14 @@ package org.example.servlyback.features.websocket_chat
 
 import org.example.servlyback.dto.ChatInfo
 import org.example.servlyback.entities.ChatMessage
+import org.example.servlyback.entities.JobRequest
+import org.example.servlyback.entities.User
 import org.example.servlyback.features._customer.CustomerRepository
 import org.example.servlyback.features._provider.ProviderRepository
 import org.example.servlyback.features.job_requests.JobRequestRepository
 import org.example.servlyback.security.firebase.TokenManager
+import org.example.servlyback.security.firebase.handleChatNotification
+import org.example.servlyback.security.firebase.sendPushNotification
 import org.example.servlyback.user.UserRepository
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -61,13 +65,15 @@ class ChatService(
     fun saveMessage(uid: String, jobRequestId: Long, content: String): ChatMessage {
         val jobRequest = jobRequestRepository.findById(jobRequestId).orElseThrow()
         val sender = userRepository.findByUid(uid) ?: throw Exception("User not found")
-
         val chatMessage = ChatMessage(
             user = sender,
             jobRequest = jobRequest,
             content = content,
             createdAt = LocalDateTime.now()
         )
+
+        handleChatNotification(jobRequest, sender)
+
         return chatMessageRepository.save(chatMessage)
     }
 }

@@ -9,8 +9,11 @@ import org.example.servlyback.entities.custom_fields.JobRequestStatus
 import org.example.servlyback.entities.custom_fields.JobStatus
 import org.example.servlyback.features._customer.CustomerRepository
 import org.example.servlyback.features.category.CategoryRepository
+import org.example.servlyback.features.geocoding.GeocodingService
+import org.example.servlyback.features.geocoding.GeocodingUtils
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.util.SortType
+import org.locationtech.jts.geom.Geometry
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.jpa.domain.Specification
@@ -19,17 +22,19 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
+import org.locationtech.jts.geom.Point
 
 @Service
 class JobPostingService(
     private val jobPostingRepository: JobPostingRepository,
     private val categoryRepository: CategoryRepository,
-    private val customerRepository: CustomerRepository
+    private val customerRepository: CustomerRepository,
+    private val geocodingService: GeocodingService
 ) {
 
     @Transactional
     fun createJob(dto: JobPostingInfo): ResponseEntity<JobPostingInfo> {
-        val firebaseToken = TokenManager.getFirebaseToken() ?: throw IllegalArgumentException("Unauthorized")
+        val firebaseToken = TokenManager.getFirebaseToken()
         val uid = firebaseToken.uid
 
         val customer = customerRepository.findByUserUid(uid) ?: throw IllegalArgumentException("Customer not found")
@@ -38,14 +43,14 @@ class JobPostingService(
         val category = categoryRepository.findById(dto.categoryId)
             .orElseThrow { IllegalArgumentException("Category not found") }
 
+//        val address = geocodingService.getAddressFromCoordinates(dto.latitude, dto.longitude)
+
         val jobPosting = JobPosting(
             customer = customer,
             title = dto.title,
             category = category,
-            city = dto.city,
-            street = dto.street,
-            houseNumber = dto.houseNumber,
-            location = null,
+            address = dto.address,
+            location = GeocodingUtils.createPoint(dto.latitude!!, dto.longitude!!),
             status = dto.status
         )
 
@@ -88,7 +93,7 @@ class JobPostingService(
 
     @Transactional
     fun getJobsEnded(sortType: SortType, pageable: Pageable): ResponseEntity<Page<JobPostingInfo>> {
-        val firebaseToken = TokenManager.getFirebaseToken() ?: return ResponseEntity(HttpStatus.UNAUTHORIZED)
+        val firebaseToken = TokenManager.getFirebaseToken()
         val uid = firebaseToken.uid
 
         val jobRequests = if (sortType == SortType.ASCENDING) {
@@ -106,9 +111,12 @@ class JobPostingService(
         pageable: Pageable,
         search: String?,
         categories: List<Long>?,
-        days: Long?
+        days: Long?,
+        latitude: Double?,
+        longitude: Double?,
+        distanceInKm: Double?
     ): ResponseEntity<Page<JobPostingInfo>> {
-        val spec = getSpecification(search, categories, days)
+        val spec = getSpecification(search, categories, days, latitude, longitude, distanceInKm)
 
         val jobPostings = jobPostingRepository.findAll(spec, pageable)
 
@@ -119,7 +127,10 @@ class JobPostingService(
     private fun getSpecification(
         search: String?,
         categories: List<Long>?,
-        days: Long?
+        days: Long?,
+        latitude: Double?,
+        longitude: Double?,
+        distanceInKm: Double?
     ): Specification<JobPosting> {
         val spec = Specification<JobPosting> { root, query, cb ->
             val predicates = mutableListOf<Predicate>()
@@ -160,6 +171,29 @@ class JobPostingService(
             if (days != null) {
                 val fromDate = LocalDateTime.now().minusDays(days)
                 predicates.add(cb.greaterThanOrEqualTo(root.get("createdAt"), fromDate))
+            }
+
+            println("#|#|#|# $latitude $longitude $distanceInKm")
+            if (latitude != null && longitude != null && distanceInKm != null) {
+                val distanceInMeters = distanceInKm * 1000
+                val locationPath = root.get<Point>("location")
+
+                val refPointExpr = cb.function(
+                    "ST_SetSRID",
+                    Point::class.java,
+                    cb.function("ST_MakePoint", Point::class.java, cb.literal(longitude), cb.literal(latitude)),
+                    cb.literal(4326)
+                )
+
+                val withinPredicate = cb.isTrue(cb.function(
+                    "ST_DWithin",
+                    Boolean::class.java,
+                    locationPath,
+                    refPointExpr,
+                    cb.literal(distanceInMeters)
+                ))
+
+                predicates.add(withinPredicate)
             }
 
             cb.and(*predicates.toTypedArray())

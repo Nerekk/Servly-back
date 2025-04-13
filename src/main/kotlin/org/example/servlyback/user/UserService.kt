@@ -11,17 +11,22 @@ import org.springframework.stereotype.Service
 @Service
 class UserService(private val userRepository: UserRepository) {
 
-    fun getUserRoles(): ResponseEntity<Role> {
-        val firebaseToken = TokenManager.getFirebaseToken() ?: return ResponseEntity(HttpStatus.UNAUTHORIZED)
+    fun getUserRoles(fcmToken: String): ResponseEntity<Role> {
+        val firebaseToken = TokenManager.getFirebaseToken()
         val uid = firebaseToken.uid
         val user = userRepository.findByUid(uid)
 
         if (user != null) {
+            if (fcmToken.isNotEmpty()) {
+                user.fcmToken = fcmToken
+                userRepository.save(user)
+            }
             return ResponseEntity(user.role, HttpStatus.OK)
         } else {
             val newUser = User(
                 uid = uid,
-                email = getEmailByUid(uid)
+                email = getEmailByUid(uid),
+                fcmToken = fcmToken
             )
             userRepository.save(newUser)
 
@@ -30,7 +35,7 @@ class UserService(private val userRepository: UserRepository) {
     }
 
     fun addUserRole(role: Role) {
-        val firebaseToken = TokenManager.getFirebaseToken() ?: return
+        val firebaseToken = TokenManager.getFirebaseToken()
         val uid = firebaseToken.uid
         val user = userRepository.findByUid(uid)
 

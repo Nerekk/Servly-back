@@ -11,6 +11,7 @@ import org.example.servlyback.features.job_postings.JobPostingRepository
 import org.example.servlyback.security.firebase.TokenManager
 import org.example.servlyback.security.firebase.TokenManager.Companion.verifyCustomer
 import org.example.servlyback.security.firebase.TokenManager.Companion.verifyProvider
+import org.example.servlyback.security.firebase.handleJobRequestNotification
 import org.springframework.boot.autoconfigure.batch.BatchProperties.Job
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
@@ -50,6 +51,9 @@ class JobRequestService(
         )
 
         val savedJobRequest = jobRequestRepository.save(jobRequest)
+
+        handleJobRequestNotification(jobPosting.customer.user, jobPosting.title, "${provider.name} jest zainteresowany zleceniem")
+
         return ResponseEntity.ok(savedJobRequest.toDto())
     }
 
@@ -99,8 +103,10 @@ class JobRequestService(
         finalStatus = when (jobRequest.jobRequestStatus) {
             JobRequestStatus.ACTIVE -> {
                 if (jobRequestStatus == JobRequestStatus.WAITING_FOR_PROVIDER_APPROVE && verifyCustomer(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "${jobRequest.jobPosting.customer.name} wysłał(a) prośbę współpracy!")
                     JobRequestStatus.WAITING_FOR_PROVIDER_APPROVE
                 } else if (jobRequestStatus == JobRequestStatus.WITHDRAWN && verifyProvider(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "${jobRequest.provider.name} wycofał(a) zainteresowanie zleceniem")
                     JobRequestStatus.WITHDRAWN
                 } else {
                     null
@@ -116,8 +122,9 @@ class JobRequestService(
                     }
                     jobRequestRepository.saveAll(otherActiveRequests)
 
-
                     jobRequest.jobPosting.status = JobStatus.IN_PROGRESS
+                    handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "${jobRequest.provider.name} zaakceptował(a) zlecenie!")
+
                     JobRequestStatus.IN_PROGRESS
                 } else if (jobRequestStatus == JobRequestStatus.WITHDRAWN && verifyProvider(jobRequest)) {
                     JobRequestStatus.WITHDRAWN
@@ -127,13 +134,17 @@ class JobRequestService(
             }
             JobRequestStatus.IN_PROGRESS -> {
                 if (jobRequestStatus == JobRequestStatus.WAITING_FOR_PROVIDER_COMPLETE && verifyCustomer(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "${jobRequest.jobPosting.customer.name} chce ukończyć zlecenie")
                     JobRequestStatus.WAITING_FOR_PROVIDER_COMPLETE
                 } else if (jobRequestStatus == JobRequestStatus.WAITING_FOR_CUSTOMER_COMPLETE && verifyProvider(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "${jobRequest.provider.name} chce ukończyć zlecenie")
                     JobRequestStatus.WAITING_FOR_CUSTOMER_COMPLETE
                 } else if (jobRequestStatus == JobRequestStatus.CANCELED_IN_PROGRESS_BY_PROVIDER && verifyProvider(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "${jobRequest.provider.name} anulował zlecenie w trakcie")
                     jobRequest.jobPosting.status = JobStatus.CANCELED
                     JobRequestStatus.CANCELED_IN_PROGRESS_BY_PROVIDER
                 } else if (jobRequestStatus == JobRequestStatus.CANCELED_IN_PROGRESS_BY_CUSTOMER && verifyCustomer(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "${jobRequest.jobPosting.customer.name} anulował zlecenie w trakcie")
                     jobRequest.jobPosting.status = JobStatus.CANCELED
                     JobRequestStatus.CANCELED_IN_PROGRESS_BY_CUSTOMER
                 } else {
@@ -142,6 +153,7 @@ class JobRequestService(
             }
             JobRequestStatus.WAITING_FOR_CUSTOMER_COMPLETE -> {
                 if (jobRequestStatus == JobRequestStatus.COMPLETED && verifyCustomer(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "Zlecenie zostało ukończone")
                     jobRequest.jobPosting.status = JobStatus.COMPLETED
                     JobRequestStatus.COMPLETED
                 } else if (jobRequestStatus == JobRequestStatus.IN_PROGRESS && verifyCustomer(jobRequest)) {
@@ -152,6 +164,7 @@ class JobRequestService(
             }
             JobRequestStatus.WAITING_FOR_PROVIDER_COMPLETE -> {
                 if (jobRequestStatus == JobRequestStatus.COMPLETED && verifyProvider(jobRequest)) {
+                    handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "Zlecenie zostało ukończone")
                     jobRequest.jobPosting.status = JobStatus.COMPLETED
                     JobRequestStatus.COMPLETED
                 } else if (jobRequestStatus == JobRequestStatus.IN_PROGRESS && verifyProvider(jobRequest)) {
@@ -170,16 +183,6 @@ class JobRequestService(
 
         jobRequest.jobRequestStatus = finalStatus
         val updatedJobRequest = jobRequestRepository.save(jobRequest)
-
-//        if (jobRequestStatus == JobRequestStatus.IN_PROGRESS) {
-//            val otherActiveRequests = jobRequestRepository.findByJobPostingIdAndJobRequestStatus(
-//                jobRequest.jobPosting.id!!, JobRequestStatus.ACTIVE
-//            )
-//            otherActiveRequests.forEach {
-//                it.jobRequestStatus = JobRequestStatus.REJECTED
-//            }
-//            jobRequestRepository.saveAll(otherActiveRequests)
-//        }
 
         return ResponseEntity.ok(updatedJobRequest.toDto())
     }

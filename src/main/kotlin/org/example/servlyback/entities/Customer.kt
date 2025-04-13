@@ -23,16 +23,10 @@ data class Customer(
     var phoneNumber: String,
 
     @Column(nullable = false)
-    var city: String,
+    var address: String,
 
-    @Column(nullable = false)
-    var street: String,
-
-    @Column(name = "house_number", nullable = true)
-    var houseNumber: String? = null,
-
-    @Column(nullable = true)
-    var location: Point? = null,
+    @Column(nullable = false, columnDefinition = "geography(Point, 4326)")
+    var location: Point,
 
     @Column(nullable = true)
     var rating: Double? = null
@@ -42,11 +36,9 @@ data class Customer(
             customerId,
             name,
             phoneNumber,
-            city,
-            street,
-            houseNumber,
-            longitude = location?.x,
-            latitude = location?.y,
+            address,
+            longitude = location.x,
+            latitude = location.y,
             rating = rating
         )
     }

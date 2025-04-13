@@ -24,17 +24,11 @@ data class JobPosting(
     @JoinColumn(name = "category_id", nullable = false)
     val category: Category,
 
-    @Column(nullable = false)
-    val city: String,
-
-    @Column(nullable = false)
-    val street: String,
-
-    @Column(name = "house_number", nullable = true)
-    val houseNumber: String? = null,
+    @Column(nullable = true, columnDefinition = "geography(Point, 4326)")
+    val location: Point? = null,
 
     @Column(nullable = true)
-    val location: Point? = null,
+    val address: String? = null,
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -55,9 +49,7 @@ data class JobPosting(
         customerName = this.customer.name,
         title = this.title,
         categoryId = this.category.id,
-        city = this.city,
-        street = this.street,
-        houseNumber = this.houseNumber,
+        address = this.address,
         latitude = this.location?.y,
         longitude = this.location?.x,
         status = this.status,

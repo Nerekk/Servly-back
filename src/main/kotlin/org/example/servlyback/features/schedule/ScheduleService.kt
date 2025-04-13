@@ -1,16 +1,21 @@
 package org.example.servlyback.features.schedule
 
+import jakarta.persistence.EntityNotFoundException
+import org.example.servlyback.dto.DateRange
 import org.example.servlyback.dto.ScheduleInfo
+import org.example.servlyback.dto.ScheduleSummary
 import org.example.servlyback.entities.Schedule
 import org.example.servlyback.entities.custom_fields.JobRequestStatus
 import org.example.servlyback.entities.custom_fields.Role
 import org.example.servlyback.entities.custom_fields.ScheduleStatus
 import org.example.servlyback.features.job_requests.JobRequestRepository
 import org.example.servlyback.security.firebase.TokenManager
+import org.example.servlyback.security.firebase.handleJobRequestNotification
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.YearMonth
 
@@ -30,6 +35,46 @@ class ScheduleService(
         }.filter { schedule ->
             (schedule.startAt.year < yearMonth.year || (schedule.startAt.year == yearMonth.year && schedule.startAt.monthValue <= yearMonth.monthValue)) &&
                     (schedule.endAt.year > yearMonth.year || (schedule.endAt.year == yearMonth.year && schedule.endAt.monthValue >= yearMonth.monthValue))
+        }
+
+        return ResponseEntity(schedules.map { it.toDto() }, HttpStatus.OK)
+    }
+
+    fun getSchedulesSummaryForUser(role: Role, yearMonth: YearMonth): ResponseEntity<ScheduleSummary> {
+        val firebaseToken = TokenManager.getFirebaseToken()
+        val uid = firebaseToken.uid
+
+        val schedules = when (role) {
+            Role.CUSTOMER -> scheduleRepository.findByJobRequestJobPostingCustomerUserUid(uid)
+            Role.PROVIDER -> scheduleRepository.findByJobRequestProviderUserUid(uid)
+            else -> return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }.filter { schedule ->
+            (schedule.startAt.year < yearMonth.year || (schedule.startAt.year == yearMonth.year && schedule.startAt.monthValue <= yearMonth.monthValue)) &&
+                    (schedule.endAt.year > yearMonth.year || (schedule.endAt.year == yearMonth.year && schedule.endAt.monthValue >= yearMonth.monthValue))
+        }
+
+        val dateRanges = schedules.map { schedule ->
+            DateRange(schedule.startAt, schedule.endAt)
+        }
+
+        val response = ScheduleSummary(
+            totalSchedules = schedules.size,
+            dateRanges = dateRanges
+        )
+
+        return ResponseEntity(response, HttpStatus.OK)
+    }
+
+    fun getSchedulesForDay(role: Role, day: LocalDate): ResponseEntity<List<ScheduleInfo>> {
+        val firebaseToken = TokenManager.getFirebaseToken()
+        val uid = firebaseToken.uid
+
+        val schedules = when (role) {
+            Role.CUSTOMER -> scheduleRepository.findByJobRequestJobPostingCustomerUserUid(uid)
+            Role.PROVIDER -> scheduleRepository.findByJobRequestProviderUserUid(uid)
+            else -> return ResponseEntity(HttpStatus.BAD_REQUEST)
+        }.filter { schedule ->
+            (!day.isBefore(schedule.startAt) && !day.isAfter(schedule.endAt))
         }
 
         return ResponseEntity(schedules.map { it.toDto() }, HttpStatus.OK)
@@ -65,6 +110,9 @@ class ScheduleService(
 
 
         val finalSchedule = scheduleRepository.save(schedule)
+
+        handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "Usługodawca utworzył harmonogram pracy")
+
         return ResponseEntity(finalSchedule.toDto(), HttpStatus.OK)
     }
 
@@ -97,16 +145,28 @@ class ScheduleService(
 
         val finalSchedule = scheduleRepository.save(schedule)
 
+        handleJobRequestNotification(jobRequest.jobPosting.customer.user, jobRequest.jobPosting.title, "Usługodawca zaktualizował harmonogram pracy")
+
         return ResponseEntity(finalSchedule.toDto(), HttpStatus.OK)
     }
 
     @Transactional
     fun approveScheduleAsCustomer(scheduleId: Long): ResponseEntity<ScheduleInfo> {
+        val schedule = scheduleRepository.findById(scheduleId).orElseThrow { EntityNotFoundException("Schedule not found with id $scheduleId") }
+        val jobRequest = schedule.jobRequest
+
+        handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "Klient zaakceptował harmonogram")
+
         return updateScheduleAsCustomer(scheduleId, ScheduleStatus.APPROVED)
     }
 
     @Transactional
     fun rejectScheduleAsCustomer(scheduleId: Long): ResponseEntity<ScheduleInfo> {
+        val schedule = scheduleRepository.findById(scheduleId).orElseThrow { EntityNotFoundException("Schedule not found with id $scheduleId") }
+        val jobRequest = schedule.jobRequest
+
+        handleJobRequestNotification(jobRequest.provider.user, jobRequest.jobPosting.title, "Klient odrzucił harmonogram")
+
         return updateScheduleAsCustomer(scheduleId, ScheduleStatus.REJECTED)
     }
 

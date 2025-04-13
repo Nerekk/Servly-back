@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*
 class UserController(private val userService: UserService) {
 
     @GetMapping
-    fun getUserRoles(): ResponseEntity<Role> {
-        return userService.getUserRoles()
+    fun getUserRoles(@RequestParam("fcmToken") fcmToken: String): ResponseEntity<Role> {
+        return userService.getUserRoles(fcmToken)
     }
 }

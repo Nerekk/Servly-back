@@ -11,6 +11,9 @@ data class User(
     @Column(nullable = false, unique = true)
     var uid: String,
 
+    @Column(name = "fcm_token")
+    var fcmToken: String = "",
+
     @Column(nullable = false, unique = true)
     var email: String,
 
