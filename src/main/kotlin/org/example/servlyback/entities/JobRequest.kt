@@ -25,6 +25,9 @@ data class JobRequest(
     var jobRequestStatus: JobRequestStatus = JobRequestStatus.ACTIVE,
 
     @OneToOne(mappedBy = "jobRequest", cascade = [CascadeType.ALL], orphanRemoval = true)
+    var payment: JobPayment? = null,
+
+    @OneToOne(mappedBy = "jobRequest", cascade = [CascadeType.ALL], orphanRemoval = true)
     var customerReview: CustomerReview? = null,
 
     @OneToOne(mappedBy = "jobRequest", cascade = [CascadeType.ALL], orphanRemoval = true)
@@ -43,6 +46,7 @@ data class JobRequest(
         schedule = schedule?.toDto(),
         customerReview = customerReview?.toDto(),
         providerReview = providerReview?.toDto(),
-        jobRequestStatus = this.jobRequestStatus
+        jobRequestStatus = this.jobRequestStatus,
+        jobPayment = payment?.toDto()
     )
 }

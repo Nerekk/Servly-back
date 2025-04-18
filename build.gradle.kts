@@ -35,6 +35,9 @@ dependencies {
 
     implementation("com.google.firebase:firebase-admin:9.4.3")
 
+    implementation("com.stripe:stripe-java:24.0.0")
+
+
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")

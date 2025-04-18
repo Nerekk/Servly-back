@@ -9,5 +9,6 @@ data class JobRequestInfo(
     val schedule: ScheduleInfo? = null,
     val customerReview: ReviewInfo? = null,
     val providerReview: ReviewInfo? = null,
-    val jobRequestStatus: JobRequestStatus = JobRequestStatus.ACTIVE
+    val jobRequestStatus: JobRequestStatus = JobRequestStatus.ACTIVE,
+    val jobPayment: JobPaymentInfo? = null
 )

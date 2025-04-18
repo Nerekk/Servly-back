@@ -12,6 +12,9 @@ data class Provider(
     @Column(name = "provider_id")
     val providerId: Long? = null,
 
+    @Column(name = "stripe_account_id", nullable = true)
+    val stripeAccountId: String? = null,
+
     @OneToOne
     @JoinColumn(name = "user_uid", nullable = false, unique = true)
     val user: User,

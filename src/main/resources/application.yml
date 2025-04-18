@@ -14,3 +14,6 @@ spring:
 
 google:
   api-key: ${GOOGLE_API_KEY}
+
+stripe:
+  secret-key: ${STRIPE_SECRET_KEY}
